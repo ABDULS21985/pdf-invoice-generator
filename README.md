@@ -1,72 +1,112 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## PDF Invoice Generator
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a NestJS-based backend application designed to generate PDF invoices, store them in a database, and handle various operations related to invoices. It includes advanced logging, error handling, and data validation to ensure a robust and reliable service.
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+	•	PDF Generation: Generate PDFs for invoices, tax receipts, and bolt receipts.
+	•	Database Integration: Use Prisma ORM with PostgreSQL for managing invoice data.
+	•	CRUD Operations: Full create, read, update, and delete functionality for invoices.
+	•	Advanced Logging: Integrated logging using Winston for better monitoring and debugging.
+	•	Error Handling and Validation: Comprehensive error handling and data validation mechanisms.
+	•	Storage Solutions: Plan for storing PDFs in a cloud storage bucket.
 
-## Installation
+## Technologies Used
 
-```bash
-$ npm install
-```
+	•	NestJS: A progressive Node.js framework for building efficient, reliable, and scalable server-side applications.
+	•	Prisma ORM: An open-source database toolkit for TypeScript and Node.js.
+	•	PostgreSQL: A powerful, open-source object-relational database system.
+	•	Winston: A versatile logging library for Node.js.
 
-## Running the app
+## Setup and Installation
 
-```bash
-# development
-$ npm run start
+git clone https://github.com/ABDULS21985/pdf-invoice-generator.git
+cd pdf-invoice-generator
+npm install
 
-# watch mode
-$ npm run start:dev
+## Set up environment variables:
+Create a .env file in the root directory and add the following:
 
-# production mode
-$ npm run start:prod
-```
+DATABASE_URL="postgresql://pdfadmin:pdfadmin@localhost:5432/pdfgen_db?schema=public"
 
-## Test
+## Generate Prisma client:
 
-```bash
-# unit tests
-$ npm run test
+npx prisma migrate dev --name init
+npx prisma generate
 
-# e2e tests
-$ npm run test:e2e
+npm run start
 
-# test coverage
-$ npm run test:cov
-```
+## Prerequisites
 
-## Support
+	•	Node.js (v14 or higher)
+	•	PostgreSQL
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## usage
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Endpoints
+
+	•	Generate PDF:
+	•	POST /pdf-generator/generate
+ 
+	Payload:
+{
+  "description": "Invoice for web development services",
+  "amount": 1500.00,
+  "from": {
+    "companyName": "Your Company Name",
+    "address": "1234 Your Street",
+    "city": "Your City",
+    "state": "Your State",
+    "zip": "12345",
+    "country": "Your Country"
+  },
+  "to": {
+    "companyName": "Client Company Name",
+    "address": "5678 Client Street",
+    "city": "Client City",
+    "state": "Client State",
+    "zip": "67890",
+    "country": "Client Country"
+  },
+  "items": [
+    {
+      "description": "Item 1",
+      "quantity": 2,
+      "unitPrice": 50
+    },
+    {
+      "description": "Item 2",
+      "quantity": 3,
+      "unitPrice": 30
+    },
+    {
+      "description": "Item 3",
+      "quantity": 1,
+      "unitPrice": 100
+    }
+  ]
+}
+## CRUD Operations for Invoices:
+	•	POST /invoices: Create a new invoice.
+	•	GET /invoices: Retrieve all invoices.
+	•	GET /invoices/:id: Retrieve a specific invoice by ID.
+	•	PUT /invoices/:id: Update an existing invoice by ID.
+	•	DELETE /invoices/:id: Delete an invoice by ID.
+
+##  Logging
+
+Logging is implemented using Winston. Logs are stored in combined.log and are also output to the console. This helps in monitoring application behavior and debugging issues efficiently.
+
+## Contributing
+
+If you wish to contribute to this project, please fork the repository and create a pull request with your changes. Ensure that your code follows the existing code style and includes appropriate tests.
+
+## Contact
+
+For any questions or inquiries, please contact Abdul Shadrach at shadrach.abdul@gmail.com.
 
 ## License
 
