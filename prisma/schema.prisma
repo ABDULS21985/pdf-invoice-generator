@@ -1,0 +1,19 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Invoice {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  amount      Float
+  from        String?  // Optional field, serialized JSON string containing 'from' details
+  to          String?  // Optional field, serialized JSON string containing 'to' details
+  items       String?  // Optional field, serialized JSON string containing 'items' details
+}
