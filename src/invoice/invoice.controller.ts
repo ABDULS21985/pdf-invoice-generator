@@ -1,13 +1,14 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { InvoiceService } from './invoice.service';
 import { Invoice } from '@prisma/client';
+import { CreateInvoiceDto } from './dto/create-invoice.dto';
 
 @Controller('invoices')
 export class InvoiceController {
   constructor(private readonly invoiceService: InvoiceService) {}
 
   @Post()
-  async createInvoice(@Body() data: any): Promise<Invoice> {
+  async createInvoice(@Body() data: CreateInvoiceDto): Promise<Invoice> {
     return this.invoiceService.createInvoice(data);
   }
 
@@ -22,7 +23,7 @@ export class InvoiceController {
   }
 
   @Put(':id')
-  async updateInvoice(@Param('id') id: number, @Body() data: any): Promise<Invoice> {
+  async updateInvoice(@Param('id') id: number, @Body() data: CreateInvoiceDto): Promise<Invoice> {
     return this.invoiceService.updateInvoice(Number(id), data);
   }
 
